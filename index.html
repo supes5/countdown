@@ -44,6 +44,20 @@
   </style>
 </head>
 <body>
+  
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <script>
+    const endDate = new Date("2026-12-15"); // Example end date
+    const startDate = new Date("2023-06-15"); // Example start date
+    const today = new Date();
+    const progress = ((today - startDate) / (endDate - startDate)) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  </script>
+  
+  
   <div class="countdown">
     <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
     <div class="unit"><div class="value" id="hours">0</div><div class="label">Hours</div></div>
