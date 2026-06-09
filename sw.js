@@ -1,5 +1,5 @@
 const CACHE_NAME = "countdown-v1";
-const ASSETS = ["/countdown.html", "/manifest.json"];
+const ASSETS = ["index.html", "manifest.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
