@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="manifest" href="manifest.json">
+  <title>Countdown Clock</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #1a1a2e;
+      color: #fff;
+    }
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      text-align: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .unit {
+      background: #16213e;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      min-width: 80px;
+    }
+    .unit .value {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .unit .label {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown">
+    <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
+    <div class="unit"><div class="value" id="hours">0</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="value" id="minutes">0</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="value" id="seconds">0</div><div class="label">Seconds</div></div>
+  </div>
+
+  <script>
+    const targetDate = new Date("2027-08-01T00:00:00");
+
+    function update() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.querySelector(".countdown").innerHTML = "<h1>Congratulations!!</h1>";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+
+      requestAnimationFrame(update);
+    }
+
+    update();
+
+    // Register service worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>
