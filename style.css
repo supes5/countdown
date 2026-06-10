@@ -2,12 +2,14 @@
 body {
   font-family: system-ui, sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
   min-height: 100vh;
   margin: 0;
   background: #1a1a2e;
   color: #fff;
+  gap: 20px; /* Space between progress bar and countdown clock */
 }
 
 .countdown {
