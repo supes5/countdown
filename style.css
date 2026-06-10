@@ -1,3 +1,9 @@
+/* Wrapper to match progress bar and countdown clock */
+.wrapper {
+  width: 90%; /* Dynamically scales to 90% of the viewport */
+  max-width: 500px; /* Limit to a maximum width */
+}
+
 /* Countdown page styles */
 body {
   font-family: system-ui, sans-serif;
@@ -9,7 +15,7 @@ body {
   margin: 0;
   background: #1a1a2e;
   color: #fff;
-  gap: 20px; /* Space between progress bar and countdown clock */
+  gap: 20px; /* Space between items */
 }
 
 .countdown {
@@ -42,8 +48,6 @@ body {
 
 /* Progress bar styles */
 #progress-container {
-  width: 100%;
-  max-width: 500px;
   height: 10px;
   background-color: #ddd;
   border-radius: 5px;
