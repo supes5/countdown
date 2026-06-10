@@ -46,12 +46,12 @@ body {
   background-color: #ddd;
   border-radius: 5px;
   overflow: hidden;
-  margin: 20px 0;
+  margin: 20px auto; /* Center the progress bar */
 }
 
 #progress-bar {
   height: 100%;
-  background-color: #4caf50;
+  background-color: #fcb1bf; /* Pastel pink */
   border-radius: 5px;
   width: 0%; /* Start at 0 */
   transition: width 0.3s ease-in-out; /* Smooth animation */
