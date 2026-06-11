@@ -5,32 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1a1a2e">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
-  <title>Countdown Clock</title>
+  <link rel="stylesheet" href="style.css"> <title>Countdown Clock</title>
 </head>
 <body>
   
-  <div id="progress-container">
-    <div id="progress-bar"></div>
-  </div>
-
-  <script>
-    const endDate = new Date("2027-08-01"); // Example end date
-    const startDate = new Date("2026-05-22"); // Example start date
-    const today = new Date();
-    const progress = ((today - startDate) / (endDate - startDate)) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
-  </script>
+  <div class="wrapper">
+    
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
   
-  
-  <div class="countdown">
-    <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
-    <div class="unit"><div class="value" id="hours">0</div><div class="label">Hours</div></div>
-    <div class="unit"><div class="value" id="minutes">0</div><div class="label">Minutes</div></div>
-    <div class="unit"><div class="value" id="seconds">0</div><div class="label">Seconds</div></div>
-  </div>
+    <div class="countdown">
+      <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
+      <div class="unit"><div class="value" id="hours">0</div><div class="label">Hours</div></div>
+      <div class="unit"><div class="value" id="minutes">0</div><div class="label">Minutes</div></div>
+      <div class="unit"><div class="value" id="seconds">0</div><div class="label">Seconds</div></div>
+    </div>
 
-  <script>
+  </div> <script>
+    const startDate = new Date("2026-05-22T00:00:00"); 
     const targetDate = new Date("2027-08-01T00:00:00");
 
     function update() {
@@ -39,9 +32,11 @@
 
       if (diff <= 0) {
         document.querySelector(".countdown").innerHTML = "<h1>Congratulations!!</h1>";
+        document.getElementById("progress-bar").style.width = "100%";
         return;
       }
 
+      // Update Countdown Digits
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
@@ -52,12 +47,18 @@
       document.getElementById("minutes").textContent = minutes;
       document.getElementById("seconds").textContent = seconds;
 
+      // Update Progress Bar
+      const totalDuration = targetDate - startDate;
+      const timePassed = now - startDate;
+      const progressPercentage = Math.min(Math.max((timePassed / totalDuration) * 100, 0), 100);
+      
+      document.getElementById("progress-bar").style.width = progressPercentage + "%";
+
       requestAnimationFrame(update);
     }
 
     update();
 
-    // Register service worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js");
     }
