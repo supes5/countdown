@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1a1a2e">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css"> <title>Countdown Clock</title>
+  <link rel="stylesheet" href="style.css"> 
+  <title>Countdown Clock</title>
 </head>
 <body>
   
@@ -15,6 +16,9 @@
       <div id="progress-bar"></div>
     </div>
   
+    <!-- Milestone Markers Section -->
+    <div id="milestones-container"></div>
+
     <div class="countdown">
       <div class="unit"><div class="value" id="days">0</div><div class="label">Days</div></div>
       <div class="unit"><div class="value" id="hours">0</div><div class="label">Hours</div></div>
@@ -22,9 +26,27 @@
       <div class="unit"><div class="value" id="seconds">0</div><div class="label">Seconds</div></div>
     </div>
 
-  </div> <script>
+  </div>
+
+  <script src="milestones.js"></script>
+  <script>
     const startDate = new Date("2026-05-22T00:00:00"); 
     const targetDate = new Date("2027-08-01T00:00:00");
+
+    function initMilestones() {
+      const container = document.getElementById("milestones-container");
+      const milestonesHTML = milestones.map((milestone, index) => {
+        const percentage = ((milestone.date - startDate) / (targetDate - startDate)) * 100;
+        return `
+          <div class="milestone" style="left: ${percentage}%" data-date="${milestone.date.toISOString()}">
+            <div class="milestone-dot"></div>
+            <div class="milestone-label">${milestone.label}</div>
+            <div class="milestone-date">${milestone.date.toLocaleDateString()}</div>
+          </div>
+        `;
+      }).join("");
+      container.innerHTML = milestonesHTML;
+    }
 
     function update() {
       const now = new Date();
@@ -54,9 +76,18 @@
       
       document.getElementById("progress-bar").style.width = progressPercentage + "%";
 
+      // Update milestone colors
+      document.querySelectorAll(".milestone").forEach(milestone => {
+        const milestoneDate = new Date(milestone.getAttribute("data-date"));
+        if (now >= milestoneDate) {
+          milestone.classList.add("completed");
+        }
+      });
+
       requestAnimationFrame(update);
     }
 
+    initMilestones();
     update();
 
     if ("serviceWorker" in navigator) {
